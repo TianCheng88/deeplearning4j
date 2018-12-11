@@ -145,16 +145,6 @@ public class DifferentialFunctionFactory {
                 iX.getShape());
     }
 
-
-    public SDVariable var(String iName, SDVariable iX) {
-        return SDVariable.builder()
-                .shape(iX.getShape())
-                .varName(iName)
-                .sameDiff(sameDiff())
-                .placeholderOnNullShape(false)
-                .build();
-    }
-
     public ExternalErrorsFunction externalErrors(SDVariable... inputs) {
         return externalErrors(null, inputs);
     }
@@ -167,14 +157,6 @@ public class DifferentialFunctionFactory {
         return fn;
     }
 
-    public SDVariable zero(int[] shape) {
-        return sameDiff.zero("one-" + UUID.randomUUID().toString(), shape);
-    }
-
-    public SDVariable zero(long[] shape) {
-        return sameDiff.zero("one-" + UUID.randomUUID().toString(), shape);
-    }
-
     public SDVariable zerosLike(SDVariable input) {
         return zerosLike(null, input);
     }
@@ -182,15 +164,6 @@ public class DifferentialFunctionFactory {
     public SDVariable zerosLike(String name, SDVariable input) {
         validateDifferentialFunctionsameDiff(input);
         return new ZerosLike(name, sameDiff(), input).outputVariable();
-    }
-
-
-    public SDVariable one(int[] shape) {
-        return one(ArrayUtil.toLongArray(shape));
-    }
-
-    public SDVariable one(long[] shape) {
-        return sameDiff.one("one-" + UUID.randomUUID().toString(), shape);
     }
 
     public SDVariable onesLike(String name, SDVariable input) {
